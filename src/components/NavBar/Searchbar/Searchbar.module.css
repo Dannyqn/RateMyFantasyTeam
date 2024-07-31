@@ -1,25 +1,48 @@
+/* Base styles for the searchbar */
 .searchbar {
-    width: 25%;
-    height: 2.5rem;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0px 0px 8px #ddd;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    margin-left: 115px;
-    margin-right: 0px;
-  }
+  width: 150%;
+  max-width: 500px; /* Adjust maximum width as needed */
+  height: 2.5rem;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px #ddd;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 10px; /* Add padding for better alignment */
+  margin: 0 auto; /* Center align the searchbar */
+}
 
+/* Input field within the searchbar */
 .input {
-    background-color: transparent;
-    border: none;
-    height: 50%;
-    font-size: 1.25rem;
-    width: 50%;
-    margin-left: 5px;
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  font-size: 1.25rem;
+  width: 100%;
+  margin: 0;
+}
+
+/* Remove outline on focus */
+.input:focus {
+  outline: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .searchbar {
+      max-width: 90%; /* Adjust width for tablets */
+      margin: 10px auto; /* Center align with margin */
+  }
+}
+
+@media (max-width: 480px) {
+  .searchbar {
+      max-width: 100%; /* Full width for small screens */
+      padding: 0 5px; /* Adjust padding for smaller screens */
   }
   
-  .input:focus {
-    outline: none;
+  .input {
+      font-size: 1rem; /* Adjust font size for smaller screens */
   }
+}

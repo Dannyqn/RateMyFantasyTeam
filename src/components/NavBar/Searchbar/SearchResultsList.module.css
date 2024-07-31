@@ -1,13 +1,35 @@
-.resultslist {
-    width: 25%;
+  /* Styles for search results list */
+  .resultsListFocused {
+    width: 140%; /* Full width relative to the search bar */
     background-color: white;
     position: absolute;
+    display: flex;
     flex-direction: column;
     box-shadow: 0px 0px 8px #ddd;
     border-radius: 10px;
     max-height: 200px;
     overflow-y: auto;
     z-index: 1000;
-    top: 100%;
-    left: 550px;
+    top: 100%; /* Directly below the search bar */
+    left: 0; /* Align with the search bar */
   }
+
+/* Hidden state for when not focused */
+.resultsListUnfocused {
+  display: none; /* Hide when not focused */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .resultsListFocused {
+    width: 90%; /* Adjust width for tablets */
+    left: 5%; /* Center-align in the middle of the container */
+  }
+}
+
+@media (max-width: 480px) {
+  .resultsListFocused {
+    width: 100%; /* Full width for small screens */
+    left: 0; /* Align to the left edge */
+  }
+}

@@ -1,12 +1,21 @@
 import styles from "./SearchResult.module.css";
 
-export const SearchResult = (result: any) => {
+interface SearchResultProps {
+  result: any;
+}
+
+export const SearchResult: React.FC<SearchResultProps> = ({result}) => {
+  const handleClick = () => {
+    console.log('Click registered');
+  };
   return (
     <div
       className= {styles.searchresult}
-      onClick={(e) => alert(`You selected ${result.result.firstname} ${result.result.lastname}!`)}
+      // onClick={(e) => alert(`You selected ${result.firstname} ${result.lastname}!`)}
+      // onClick={(e) => console.log(`You selected ${result.firstname} ${result.lastname}!`)}
+      onClick={handleClick}
     >
-      {result.result.firstname} {result.result.lastname}
+      {result.espnName}
     </div>
   );
 };

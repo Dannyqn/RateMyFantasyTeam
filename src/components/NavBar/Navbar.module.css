@@ -1,39 +1,112 @@
+/* Navbar container */
 .navbar {
-    background-color:darkblue;
+    background-color: darkblue;
     position: fixed;
     top: 0;
     left: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 30px;
-    z-index: 2;
+    padding: 5px 20px; /* Horizontal padding */
     width: 100%;
     border-bottom: 3px solid #fff;
-}
-.logo {
-    width: 3%;
-    height: 3%;
-    border-radius: 75px;
-    margin-bottom: 5px;
-    padding-bottom: 5px;
-    margin-right: 5px;
-    margin-left: 200px;
-}
-
-.loginbutton {
+    z-index: 2;
+  }
+  
+  /* Logo styles */
+  .logo {
+    width: 90px;
+    height: 70px;
+    border-radius: 20px;
+    margin: 0 20px; /* Consistent margin */
+    border: none; /* No borders */
+    outline: none; /* No outline */
+    display: block; /* Ensure correct display */
+    background-color: transparent; /* Transparency if needed */
+  }
+  
+  /* Button styles */
+  .loginbutton {
     border-radius: 10px;
     width: 150px;
     height: 50px;
-    margin-right: -150px;
-    margin-left: 0px;
-}
-
-.signupbutton {
+    margin: 0 200px; /* Adjust margin for spacing */
+    padding: 0;
+    background-color: #fff; /* Optional background color */
+    color: darkblue; /* Optional text color */
+    border: none; /* Ensure no border */
+    cursor: pointer; /* Pointer cursor for buttons */
+  }
+  .signupbutton {
     border-radius: 10px;
     width: 150px;
     height: 50px;
-    margin-right: 400px;
-    margin-left: 0px;
-}
+    margin: 0 0px; /* Adjust margin for spacing */
+    margin-right: 200px;
+    padding: 0;
+    background-color: #fff; /* Optional background color */
+    color: darkblue; /* Optional text color */
+    border: none; /* Ensure no border */
+    cursor: pointer; /* Pointer cursor for buttons */
+  }
+  
+  /* SearchBar container */
+  .searchbarcontainer {
+    position: relative; /* Positioning for absolute children */
+    max-width: 300px; /* Max width for search bar */
+    flex: 1; /* Flex grow to fill space */
+    display: flex;
+    align-items: center; /* Align items vertically */
+  }
 
+
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+    }
+  
+    .logo {
+      margin: 0;
+      align-self: center; /* Center logo in mobile view */
+    }
+  
+    .searchbarcontainer {
+      width: 100%; /* Full width for mobile view */
+    }
+  
+    .loginbutton,
+    .signupbutton {
+      width: 100%;
+      margin: 10px 0px; /* Adjust margin for mobile view */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .navbar {
+      padding: 5px;
+    }
+  
+    .logo {
+      width: 70px;
+      height: 50px;
+    }
+  
+    .searchbarcontainer {
+      width: 100%; /* Full width for small screens */
+    }
+  
+    .resultsListFocused {
+      width: 100%; /* Full width for small screens */
+      left: 0; /* Align to the left edge */
+    }
+  
+    .loginbutton,
+    .signupbutton {
+      width: 100%;
+      margin: 5px 0; /* Adjust margin for smaller screens */
+    }
+  }
