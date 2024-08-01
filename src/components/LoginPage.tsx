@@ -1,29 +1,38 @@
 import React, { useState } from 'react';
 import styles from './LoginPage.module.css'; // Import your CSS module
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './firebase';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle the login logic here, e.g., send data to an API
-    console.log('Username:', username);
-    console.log('Password:', password);
-    // Redirect or handle post-login logic here
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      alert('User has logged in successfully');
+      navigate('/'); // Redirect to the homepage
+    } catch (error: any) {
+      setError(error.message);
+    }
   };
 
   return (
     <div className={styles.container}>
       <h1>Login</h1>
+      {error && <p className={styles.error}>{error}</p>}
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="email">Email:</label>
           <input
-            id="username"
+            id="email"
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className={styles.input}
           />
         </div>

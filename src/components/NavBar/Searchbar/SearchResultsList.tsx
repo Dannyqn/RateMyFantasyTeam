@@ -27,7 +27,10 @@ export const SearchResultsList: React.FC<SearchResultsListProps> = ({ results, i
   };
 
   return (
-    <div className={isFocused ? styles.resultsListFocused : styles.resultsListUnfocused}>
+    <div
+      className={isFocused ? styles.resultsListFocused : styles.resultsListUnfocused}
+      onMouseDown={(e) => e.preventDefault()} // Prevent blur on mousedown
+    >
       <List
         height={400} // Adjust based on the height of your container
         itemCount={limitedResults.length}

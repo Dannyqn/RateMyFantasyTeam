@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styles from "./Searchbar.module.css";
+import { FaTimes } from 'react-icons/fa'; // Import FaTimes for the 'x' icon
 
 interface SearchBarProps {
   setResults: (results: any) => void;
@@ -21,18 +22,16 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setResults, setIsFocused }
   const [cache, setCache] = useState<{ [key: string]: any[] }>({});
   const [isLoading, setIsLoading] = useState(false);
 
-  // Debounce the input to reduce the number of API calls
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedInput(input);
-    }, 300); // Debounce delay adjusted to 300ms
+    }, 300);
 
     return () => {
       clearTimeout(handler);
     };
   }, [input]);
 
-  // Fetch data when the debounced input changes
   useEffect(() => {
     if (debouncedInput) {
       fetchData(debouncedInput);
@@ -63,7 +62,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setResults, setIsFocused }
       setResults(playersData);
     } catch (error) {
       console.error("Error fetching data:", error);
-      setResults([]); // Handle error by clearing results or showing a message
+      setResults([]);
     } finally {
       setIsLoading(false);
     }
@@ -71,6 +70,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setResults, setIsFocused }
 
   const handleChange = (value: string) => {
     setInput(value);
+  };
+
+  const clearInput = () => {
+    setInput("");
+    setResults([]); // Clear search results when input is cleared
   };
 
   return (
@@ -85,6 +89,11 @@ export const SearchBar: React.FC<SearchBarProps> = ({ setResults, setIsFocused }
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
         />
+        {input && (
+          <button className={styles.clearButton} onClick={clearInput}>
+            <FaTimes />
+          </button>
+        )}
         {isLoading && <div className={styles.loadingIndicator}>Loading...</div>}
       </div>
     </div>

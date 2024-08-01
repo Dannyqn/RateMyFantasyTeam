@@ -59,7 +59,8 @@
 
 /* Button styles */
 .loginbutton,
-.signupbutton {
+.signupbutton,
+.logoutbutton {
   border-radius: 10px;
   width: 150px;
   height: 50px;
@@ -102,7 +103,8 @@
   }
 
   .loginbutton,
-  .signupbutton {
+  .signupbutton,
+  .logoutbutton {
     width: 100%;
     margin: 0; /* Remove margins for small screens */
   }
@@ -124,7 +126,8 @@
   }
 
   .loginbutton,
-  .signupbutton {
+  .signupbutton,
+  .logoutbutton {
     width: 100%;
     margin: 0; /* Remove margins for smaller screens */
   }

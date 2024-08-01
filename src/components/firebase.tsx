@@ -1,6 +1,7 @@
 // Import the necessary functions from Firebase SDK
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 // Replace this with your Firebase project configuration
 const firebaseConfig = {
@@ -19,4 +20,6 @@ const app = initializeApp(firebaseConfig);
 // Get a reference to the auth service
 const auth = getAuth(app);
 
-export { auth };
+const db = getFirestore(app);
+
+export { auth, db };

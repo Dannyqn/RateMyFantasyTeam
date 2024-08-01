@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext'; // Import useAuth hook
+import { auth } from '../firebase'; // Import auth for logout
 import styles from './Navbar.module.css'; // Import CSS module for styling
 import logo from '../../assets/RateMyFantasyTeam.png';
 import SearchBar from './Searchbar/Searchbar';
@@ -9,6 +11,7 @@ export const Navbar = () => {
   const [results, setResults] = useState([]);
   const [isFocused, setIsFocused] = useState(false);
   const navigate = useNavigate(); // Hook for navigation
+  const { currentUser, userData } = useAuth(); // Get current user and userData from Auth context
 
   // Handler for login button click
   const handleLoginClick = () => {
@@ -18,6 +21,12 @@ export const Navbar = () => {
   // Handler for signup button click
   const handleSignupClick = () => {
     navigate('/signup'); // Redirects to the signup page
+  };
+
+  // Handler for logout button click
+  const handleLogoutClick = async () => {
+    await auth.signOut();
+    navigate('/'); // Redirects to the home page after logout
   };
 
   return (
@@ -30,12 +39,25 @@ export const Navbar = () => {
         {results && results.length > 0 && <SearchResultsList results={results} isFocused={isFocused} />}
       </div>
       <div className={styles.buttonContainer}>
-        <button className={styles.loginbutton} onClick={handleLoginClick}>
-          Log in
-        </button>
-        <button className={styles.signupbutton} onClick={handleSignupClick}>
-          Sign Up
-        </button>
+        {!currentUser ? (
+          <>
+            <button className={styles.loginbutton} onClick={handleLoginClick}>
+              Log in
+            </button>
+            <button className={styles.signupbutton} onClick={handleSignupClick}>
+              Sign Up
+            </button>
+          </>
+        ) : userData ? (
+          <>
+            <span className={styles.username}>{userData.username}</span>
+            <button className={styles.logoutbutton} onClick={handleLogoutClick}>
+              Logout
+            </button>
+          </>
+        ) : (
+          <span className={styles.loading}>Loading...</span>
+        )}
       </div>
     </nav>
   );

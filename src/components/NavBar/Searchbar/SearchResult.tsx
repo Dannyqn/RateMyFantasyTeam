@@ -4,19 +4,22 @@ interface SearchResultProps {
   result: any;
 }
 
-export const SearchResult: React.FC<SearchResultProps> = ({result}) => {
+export const SearchResult: React.FC<SearchResultProps> = ({ result }) => {
   const handleClick = () => {
-    console.log('Click registered');
+    alert(`You have selected: ${result.espnName}`);
   };
+
   return (
     <div
-      className= {styles.searchresult}
-      // onClick={(e) => alert(`You selected ${result.firstname} ${result.lastname}!`)}
-      // onClick={(e) => console.log(`You selected ${result.firstname} ${result.lastname}!`)}
+      className={styles.searchresult}
       onClick={handleClick}
     >
       {result.espnName}
-      <img src={result.espnHeadshot} alt={`${result.firstname} ${result.lastname}`} className={styles.playerImage} />
+      <img 
+        src={result.espnHeadshot} 
+        alt={`${result.espnName}`} 
+        className={styles.playerImage} 
+      />
     </div>
   );
 };

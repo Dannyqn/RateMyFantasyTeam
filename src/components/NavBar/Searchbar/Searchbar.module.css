@@ -11,6 +11,7 @@
   align-items: center;
   padding: 0 10px; /* Add padding for better alignment */
   margin: 0 auto; /* Center align the search bar */
+  position: relative; /* Required for positioning the clear button */
 }
 
 /* Input field within the search bar */
@@ -26,6 +27,11 @@
 /* Remove outline on focus */
 .input:focus {
   outline: none;
+}
+
+/* Change color on hover */
+.clearButton:hover {
+  color: #333; /* Change color on hover if desired */
 }
 
 /* Responsive adjustments */
@@ -44,5 +50,9 @@
 
   .input {
     font-size: 1rem; /* Adjust font size for smaller screens */
+  }
+
+  .clearButton {
+    font-size: 1rem; /* Adjust font size of the button for smaller screens */
   }
 }
