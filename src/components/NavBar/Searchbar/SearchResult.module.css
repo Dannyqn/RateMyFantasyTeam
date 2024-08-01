@@ -1,8 +1,30 @@
-.searchresult{
-    padding: 10px 20px;
-    cursor: pointer;
-  }
-  
-  .searchresult:hover {
-    background-color: #efefef;
-  }
+.searchresult {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.searchresult:hover {
+  background-color: #efefef;
+}
+
+.textContainer {
+  flex: 1; /* Makes the text container take up available space */
+}
+
+.imgContainer {
+  display: flex;
+  justify-content: flex-end; /* Align the image to the right */
+}
+
+.playerImage {
+  width: 100px; /* Set the desired square width */
+  height: 100px; /* Set the same height for a square */
+  object-fit: cover; /* Ensures the image covers the square area */
+  border-radius: 8px; /* Optional: rounded corners */
+}

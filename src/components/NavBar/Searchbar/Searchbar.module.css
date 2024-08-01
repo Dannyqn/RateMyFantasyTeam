@@ -1,7 +1,7 @@
-/* Base styles for the searchbar */
+/* Base styles for the search bar */
 .searchbar {
-  width: 150%;
-  max-width: 500px; /* Adjust maximum width as needed */
+  width: 100%; /* Make sure the search bar takes full width of its container */
+  max-width: 500px; /* Set the maximum width to match with search results list */
   height: 2.5rem;
   border: none;
   border-radius: 10px;
@@ -10,10 +10,10 @@
   display: flex;
   align-items: center;
   padding: 0 10px; /* Add padding for better alignment */
-  margin: 0 auto; /* Center align the searchbar */
+  margin: 0 auto; /* Center align the search bar */
 }
 
-/* Input field within the searchbar */
+/* Input field within the search bar */
 .input {
   background-color: transparent;
   border: none;
@@ -31,18 +31,18 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .searchbar {
-      max-width: 90%; /* Adjust width for tablets */
-      margin: 10px auto; /* Center align with margin */
+    max-width: 90%; /* Adjust width for tablets */
+    margin: 10px auto; /* Center align with margin */
   }
 }
 
 @media (max-width: 480px) {
   .searchbar {
-      max-width: 100%; /* Full width for small screens */
-      padding: 0 5px; /* Adjust padding for smaller screens */
+    max-width: 100%; /* Full width for small screens */
+    padding: 0 5px; /* Adjust padding for smaller screens */
   }
-  
+
   .input {
-      font-size: 1rem; /* Adjust font size for smaller screens */
+    font-size: 1rem; /* Adjust font size for smaller screens */
   }
 }

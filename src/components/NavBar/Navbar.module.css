@@ -1,112 +1,131 @@
 /* Navbar container */
 .navbar {
-    background-color: darkblue;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 5px 20px; /* Horizontal padding */
-    width: 100%;
-    border-bottom: 3px solid #fff;
-    z-index: 2;
+  background-color: green;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 20px; /* Horizontal padding */
+  width: 100%;
+  border-bottom: 3px solid #fff;
+  z-index: 2;
+}
+
+/* Logo styles */
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.logoImage {
+  width: 90px;
+  height: 70px;
+  border-radius: 20px;
+}
+
+/* SearchBar container */
+.searchbarcontainer {
+  position: relative; /* Positioning for absolute children */
+  max-width: 500px; /* Match the max width of the search results list */
+  width: 100%; /* Full width for responsive design */
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin: 0 auto; /* Center align the search bar container */
+}
+
+
+/* Search bar styles */
+.searchbar {
+  width: 100%;
+  height: 2.5rem;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0px 0px 8px #ddd;
+  padding: 0 10px;
+  font-size: 1rem;
+}
+
+/* Button container */
+.buttonContainer {
+  display: flex;
+  gap: 10px; /* Space between buttons */
+  align-items: center; /* Vertically center buttons */
+  margin-left: auto; /* Push buttons to the right */
+  padding-right: 100px; /* Space between buttons and the right edge */
+}
+
+/* Button styles */
+.loginbutton,
+.signupbutton {
+  border-radius: 10px;
+  width: 150px;
+  height: 50px;
+  background-color: #fff;
+  color: darkblue;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ensure buttons stay within view */
+.loginbutton {
+  margin-right: 10px; /* Small margin between buttons */
+}
+
+.signupbutton {
+  margin: 0; /* Remove margin to align properly */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center; /* Center-align items in column layout */
+    padding: 10px;
   }
-  
-  /* Logo styles */
-  .logo {
-    width: 90px;
-    height: 70px;
-    border-radius: 20px;
-    margin: 0 20px; /* Consistent margin */
-    border: none; /* No borders */
-    outline: none; /* No outline */
-    display: block; /* Ensure correct display */
-    background-color: transparent; /* Transparency if needed */
-  }
-  
-  /* Button styles */
-  .loginbutton {
-    border-radius: 10px;
-    width: 150px;
-    height: 50px;
-    margin: 0 200px; /* Adjust margin for spacing */
-    padding: 0;
-    background-color: #fff; /* Optional background color */
-    color: darkblue; /* Optional text color */
-    border: none; /* Ensure no border */
-    cursor: pointer; /* Pointer cursor for buttons */
-  }
-  .signupbutton {
-    border-radius: 10px;
-    width: 150px;
-    height: 50px;
-    margin: 0 0px; /* Adjust margin for spacing */
-    margin-right: 200px;
-    padding: 0;
-    background-color: #fff; /* Optional background color */
-    color: darkblue; /* Optional text color */
-    border: none; /* Ensure no border */
-    cursor: pointer; /* Pointer cursor for buttons */
-  }
-  
-  /* SearchBar container */
+
   .searchbarcontainer {
-    position: relative; /* Positioning for absolute children */
-    max-width: 300px; /* Max width for search bar */
-    flex: 1; /* Flex grow to fill space */
-    display: flex;
-    align-items: center; /* Align items vertically */
+    width: 100%; /* Full width for mobile view */
+    max-width: none; /* Remove max-width for small screens */
   }
 
+  .buttonContainer {
+    flex-direction: column; /* Stack buttons vertically on smaller screens */
+    gap: 10px;
+    width: 100%; /* Ensure buttons stack within full width */
+    padding-right: 0; /* Remove right padding for mobile view */
+  }
 
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 10px;
-    }
-  
-    .logo {
-      margin: 0;
-      align-self: center; /* Center logo in mobile view */
-    }
-  
-    .searchbarcontainer {
-      width: 100%; /* Full width for mobile view */
-    }
-  
-    .loginbutton,
-    .signupbutton {
-      width: 100%;
-      margin: 10px 0px; /* Adjust margin for mobile view */
-    }
+  .loginbutton,
+  .signupbutton {
+    width: 100%;
+    margin: 0; /* Remove margins for small screens */
   }
-  
-  @media (max-width: 480px) {
-    .navbar {
-      padding: 5px;
-    }
-  
-    .logo {
-      width: 70px;
-      height: 50px;
-    }
-  
-    .searchbarcontainer {
-      width: 100%; /* Full width for small screens */
-    }
-  
-    .resultsListFocused {
-      width: 100%; /* Full width for small screens */
-      left: 0; /* Align to the left edge */
-    }
-  
-    .loginbutton,
-    .signupbutton {
-      width: 100%;
-      margin: 5px 0; /* Adjust margin for smaller screens */
-    }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 5px;
   }
+
+  .searchbarcontainer {
+    width: 100%; /* Full width for small screens */
+  }
+
+  .buttonContainer {
+    flex-direction: column; /* Stack buttons vertically on smaller screens */
+    gap: 5px;
+    padding-right: 0; /* Remove right padding for small screens */
+  }
+
+  .loginbutton,
+  .signupbutton {
+    width: 100%;
+    margin: 0; /* Remove margins for smaller screens */
+  }
+}

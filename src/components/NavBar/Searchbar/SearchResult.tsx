@@ -16,6 +16,7 @@ export const SearchResult: React.FC<SearchResultProps> = ({result}) => {
       onClick={handleClick}
     >
       {result.espnName}
+      <img src={result.espnHeadshot} alt={`${result.firstname} ${result.lastname}`} className={styles.playerImage} />
     </div>
   );
 };

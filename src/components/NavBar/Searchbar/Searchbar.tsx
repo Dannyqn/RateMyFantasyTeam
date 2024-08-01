@@ -1,5 +1,5 @@
-import {useState, useEffect } from "react"
-import styles from "./Searchbar.module.css"
+import { useState, useEffect } from "react";
+import styles from "./Searchbar.module.css";
 
 interface SearchBarProps {
   setResults: (results: any) => void;
@@ -16,37 +16,79 @@ const options = {
 };
 
 export const SearchBar: React.FC<SearchBarProps> = ({ setResults, setIsFocused }) => {
-  
-    const [input, setInput] = useState("");
-    const fetchData = (value: any) => {
-      fetch(url, options)
-        .then((response) => response.json())
-        .then((json)=> {
-          const playersData = json.body.filter((player: any) => {
-              if(player.pos.toLowerCase() == "wr" || player.pos.toLowerCase() == "rb" || player.pos.toLowerCase() == "qb" || player.pos.toLowerCase() == "te"  
-              && player.isFreeAgent.toLowerCase() == "false" && player.espnName.toLowerCase().includes(value)){
-                return(
-                  value &&
-                  player &&
-                  player.espnName &&
-                  player.espnName.toLowerCase().includes(value)
-                );
-              }
-          })
-          setResults(playersData);
-        })
+  const [input, setInput] = useState("");
+  const [debouncedInput, setDebouncedInput] = useState(input);
+  const [cache, setCache] = useState<{ [key: string]: any[] }>({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Debounce the input to reduce the number of API calls
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedInput(input);
+    }, 300); // Debounce delay adjusted to 300ms
+
+    return () => {
+      clearTimeout(handler);
     };
-    const handleChange = (value: any) => {
-      fetchData(value)
-      setInput(value)
+  }, [input]);
+
+  // Fetch data when the debounced input changes
+  useEffect(() => {
+    if (debouncedInput) {
+      fetchData(debouncedInput);
+    } else {
+      setResults([]);
+    }
+  }, [debouncedInput]);
+
+  const fetchData = async (query: string) => {
+    if (cache[query]) {
+      setResults(cache[query]);
+      return;
     }
 
-    return (
-    <div className = {styles.searchbarContainer}>
-            <div className={styles.searchbar} id="searchbar">
-            <input className= {styles.input} placeholder = "Type to search..." value = {input} onChange={(e) => handleChange(e.target.value)} id = "searchBar" onFocus={() => setIsFocused(true)}  onBlur={() => setIsFocused(false)}></input>
-        </div>
+    setIsLoading(true);
+    
+    try {
+      const response = await fetch(`${url}?query=${query}`, options);
+      const json = await response.json();
+
+      const playersData = json.body.filter((player: any) => 
+        ["wr", "rb", "qb", "te"].includes(player.pos.toLowerCase()) &&
+        player.isFreeAgent.toLowerCase() === "false" &&
+        player.espnName.toLowerCase().includes(query)
+      );
+
+      setCache(prevCache => ({ ...prevCache, [query]: playersData }));
+      setResults(playersData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setResults([]); // Handle error by clearing results or showing a message
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleChange = (value: string) => {
+    setInput(value);
+  };
+
+  return (
+    <div className={styles.searchbarContainer}>
+      <div className={styles.searchbar} id="searchbar">
+        <input
+          className={styles.input}
+          placeholder="Type to search..."
+          value={input}
+          onChange={(e) => handleChange(e.target.value)}
+          id="searchBar"
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+        />
+        {isLoading && <div className={styles.loadingIndicator}>Loading...</div>}
+      </div>
     </div>
-    );
+  );
 };
+
 export default SearchBar;
