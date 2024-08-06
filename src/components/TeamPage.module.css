@@ -1,120 +1,152 @@
 /* Ensure that the team page and team content are styled correctly */
 .teamPage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f4f4f4;
-    min-height: 100vh;
-    padding: 20px;
-  }
-  
-  .teamContent {
-    width: 100%;
-    max-width: 800px; /* Adjust width as needed */
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-  /* Style inputs and buttons */
-  .teamInput, .teamTextarea, .memberInput {
-    font-size: 16px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 100%;
-  }
-  
-  .teamTextarea {
-    resize: vertical;
-    height: 100px;
-  }
-  
-  .addMemberButton, .saveButton, .editButton {
-    font-size: 16px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .addMemberButton:hover, .saveButton:hover, .editButton:hover {
-    background-color: #45a049;
-  }
-  
-  .memberForm {
-    margin-bottom: 20px;
-  }
-  
-  /* Flex container for columns */
-  .memberColumns {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
-  /* Style each column */
-  .memberColumn {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Space between members */
-    width: 48%; /* Adjust width to fit two columns */
-    background-color: #fff;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    min-height: 200px; /* Ensure sufficient height for dragging */
-  }
-  
-  /* Label styling */
-  .columnLabel {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  
-  /* Style draggable items and placeholders */
-  .memberItem, .memberPlaceholder {
-    background-color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    width: 100%; /* Full width for each item */
-    height: 30px; /* Adjust height as needed */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box; /* Ensure padding and border are included in width/height */
-    cursor: move; /* Change cursor to indicate draggable item */
-  }
-  
-  /* Placeholder styling */
-  .memberPlaceholder {
-    background-color: #f0f0f0; /* Placeholder color */
-    border: 1px dashed #ccc; /* Dashed border for placeholders */
-  }
-  
-  /* IR/IL label */
-  .irIlLabel {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
-    text-align: center;
-    color: #333;
-  }
-  
-  /* Additional styles for team name and description */
-  .teamName {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .teamDescription {
-    font-size: 16px;
-    color: #333;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.teamContent {
+  width: 100%;
+  max-width: 800px; /* Adjust width as needed */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 75px;
+}
+
+/* Style inputs and buttons */
+.dropdown {
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+.teamInput, .memberInput {
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 97%;
+}
+
+.addMemberButton, .saveButton, .editButton, .addPlayerButton, .cancelButton {
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.addMemberButton:hover, .saveButton:hover, .editButton:hover, .addPlayerButton:hover {
+  background-color: #45a049;
+}
+
+.cancelButton {
+  background-color: #f44336; /* Red for cancel button */
+}
+
+.cancelButton:hover {
+  background-color: #e53935;
+}
+
+.memberForm {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between form fields */
+}
+
+/* Add space between the buttons */
+.memberForm button {
+  margin-top: 5px;
+}
+
+/* Flex container for columns */
+.memberColumns {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Style each column */
+.memberColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between members */
+  width: 48%; /* Adjust width to fit two columns */
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  min-height: 200px; /* Ensure sufficient height for dragging */
+}
+
+/* Label styling */
+.columnLabel, .dropdownLabel {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Style draggable items and placeholders */
+.memberItem, .memberPlaceholder {
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100%; /* Full width for each item */
+  height: 30px; /* Adjust height as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box; /* Ensure padding and border are included in width/height */
+  cursor: move; /* Change cursor to indicate draggable item */
+}
+
+/* Placeholder styling */
+.memberPlaceholder {
+  background-color: #f0f0f0; /* Placeholder color */
+  border: 1px dashed #ccc; /* Dashed border for placeholders */
+}
+
+/* IR/IL label */
+.irIlLabel {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #333;
+}
+
+/* Additional styles for team name */
+.teamName {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+/* Platform label */
+.platform {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Add a player section */
+.addPlayerSection {
+  width: 100%;
+  max-width: 800px; /* Ensure it aligns with the content width */
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
