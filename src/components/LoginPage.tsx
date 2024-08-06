@@ -20,7 +20,6 @@ const LoginPage: React.FC = () => {
       // Set a timeout to navigate after the popup is displayed
       setTimeout(() => {
         setShowPopup(false); // Hide the popup before redirecting
-        navigate('/'); // Redirect to homepage
       }, 2000); // Adjust the delay as needed (2000ms = 2 seconds)
     } catch (error: any) {
       setError(error.message);
@@ -29,6 +28,7 @@ const LoginPage: React.FC = () => {
 
   const handleClosePopup = () => {
     setShowPopup(false);
+    navigate('/'); // Redirect to homepage
     // Redirect or handle post-signup logic here
   };
 

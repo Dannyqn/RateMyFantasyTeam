@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext'; // Import useAuth hook
 import { auth } from '../firebase'; // Import auth for logout
@@ -29,6 +29,11 @@ export const Navbar = () => {
     navigate('/'); // Redirects to the home page after logout
   };
 
+    // Handler for profile click
+    const handleProfileClick = async () => {
+      navigate('/profile'); // Redirects to the profile page
+    };
+
   return (
     <nav className={styles.navbar} id="navbar">
       <Link to="/" className={styles.logo}>
@@ -50,7 +55,9 @@ export const Navbar = () => {
           </>
         ) : userData ? (
           <>
-            <span className={styles.username}>{userData.username}</span>
+            <Link to="/profile" className={styles.usernameLink}>
+                <span className={styles.username} onClick={handleProfileClick}>{userData.username}</span>
+            </Link>
             <button className={styles.logoutbutton} onClick={handleLogoutClick}>
               Logout
             </button>

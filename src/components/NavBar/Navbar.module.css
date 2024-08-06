@@ -11,6 +11,7 @@
   width: 100%;
   border-bottom: 3px solid #fff;
   z-index: 2;
+  border-bottom: black solid medium;
 }
 
 /* Logo styles */
@@ -26,6 +27,19 @@
   border-radius: 20px;
 }
 
+.usernameLink {
+  text-decoration: none;
+}
+
+.username {
+  border: 10px white solid;
+  background-color: white;
+  border-radius: 10px;
+  display: inline-block;
+  font-family: Arial, Helvetica;
+  color: black;
+  font-size: 25px;
+}
 /* SearchBar container */
 .searchbarcontainer {
   position: relative; /* Positioning for absolute children */

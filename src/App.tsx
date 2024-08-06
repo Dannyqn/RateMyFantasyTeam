@@ -6,7 +6,8 @@ import LoginPage from './components/LoginPage'; // Import your LoginPage compone
 import Layout from './components/NavBar/Layout'; // Import the Layout component
 import SignUpPage from './components/SignUpPage';
 import { AuthProvider } from './components/AuthContext'; // Import AuthProvider
-
+import ProfilePage from './components/ProfilePage';
+import TeamPage from './components/TeamPage';
 const App: React.FC = () => {
   return (
     <AuthProvider>
@@ -16,6 +17,8 @@ const App: React.FC = () => {
             <Route index element={<HomePage />} />
             <Route path="login" element={<LoginPage />} />
             <Route path="signup" element={<SignUpPage />} />
+            <Route path="profile" element={<ProfilePage />}/>
+            <Route path="teamcreation" element={<TeamPage />}/>
             {/* Add other routes here */}
           </Route>
         </Routes>

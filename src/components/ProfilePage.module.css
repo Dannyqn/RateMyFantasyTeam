@@ -1,0 +1,75 @@
+.homePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+}
+
+.profileContent {
+  padding-top: 100px; /* Adjust this value based on your navbar height */
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 20px; /* Adjust this value as needed */
+}
+
+.profilePicture {
+  width: 350px; /* Increased size */
+  height: 350px; /* Increased size */
+  border-radius: 10px; /* Square shape */
+  object-fit: cover;
+  margin-right: 100px;
+  margin-left: 50px;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.profileName {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.profileEmail {
+  color: #888;
+  margin-bottom: 10px;
+}
+
+.profileBio {
+  font-size: 16px;
+  color: #333;
+}
+
+.profileInput, .profileTextarea {
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 400px;
+}
+
+.profileTextarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.profileButton, .createTeamButton {
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  align-self: flex-start;
+}
+
+.profileButton:hover, .createTeamButton:hover {
+  background-color: #45a049;
+}
