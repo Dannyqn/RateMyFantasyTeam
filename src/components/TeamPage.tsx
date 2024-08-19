@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styles from './TeamPage.module.css'; // Import the CSS module for styling
-import { useLocation } from 'react-router-dom'; // Import useLocation hook
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { db } from './firebase'; // Import the auth and db instances
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 
 type Member = {
   name: string;
@@ -29,7 +30,7 @@ const initialTeam: Team = {
   irIl: [],
 };
 
-const MAX_MEMBERS = 17;
+const MAX_MEMBERS = 19;
 
 const TeamPage: React.FC = () => {
   const location = useLocation();
@@ -40,10 +41,20 @@ const TeamPage: React.FC = () => {
   
   useEffect(() => {
     const { state } = location;
-    if (state && (state as any).team) {
-      const teamData = (state as any).team;
-      setTeam(teamData);
-      setIsEditing(true); // Set editing mode to true when a team is loaded
+    if (state && (state as any).teamId) {
+      const teamId = (state as any).teamId;
+      // Fetch team data from Firestore
+      const fetchTeam = async () => {
+        const teamDoc = doc(db, 'teams', teamId);
+        const teamSnapshot = await getDoc(teamDoc);
+        if (teamSnapshot.exists()) {
+          setTeam(teamSnapshot.data() as Team);
+          setIsEditing((state as any).isEditing || false); // Set editing mode to true when a team is loaded
+        } else {
+          console.error('No such team!');
+        }
+      };
+      fetchTeam();
     } else {
       // Initialize a new team with a unique ID if no team is provided
       setTeam({ ...initialTeam, id: Date.now().toString() });
@@ -69,32 +80,52 @@ const TeamPage: React.FC = () => {
     }
   };
 
-  const handleSave = () => {
-    localStorage.setItem('teamData', JSON.stringify(team)); // Save team data to local storage
+  const handleSave = async () => {
+    if (team.id) {
+      const teamDocRef = doc(db, 'teams', team.id);
+      const teamSnapshot = await getDoc(teamDocRef);
+  
+      if (teamSnapshot.exists()) {
+        // Update the existing team document
+        await updateDoc(teamDocRef, team);
+      } else {
+        // If the document does not exist, create it
+        await setDoc(teamDocRef, team);
+      }
+    } else {
+      // Create a new team document if no ID is present
+      const newTeamId = Date.now().toString();
+      const newTeamDocRef = doc(db, 'teams', newTeamId);
+      await setDoc(newTeamDocRef, { ...team, id: newTeamId });
+      setTeam({ ...team, id: newTeamId });
+    }
     setIsEditing(false);
   };
+  
 
-  const handleSubmit = () => {
-    const savedTeams = localStorage.getItem('teamsData');
-    const existingTeams: Team[] = savedTeams ? JSON.parse(savedTeams) : [];
-
-    if (isEditing) {
-      // Update existing team
-      const updatedTeams = existingTeams.map((t: Team) => {
-        if (t.id === team.id) {
-          return team; // Replace with the updated team
-        }
-        return t; // Keep existing team as is
-      });
-      localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
+  const handleSubmit = async () => {
+    if (team.id) {
+      const teamDocRef = doc(db, 'teams', team.id);
+      const teamSnapshot = await getDoc(teamDocRef);
+  
+      if (teamSnapshot.exists()) {
+        // Update the existing team document
+        await updateDoc(teamDocRef, team);
+      } else {
+        // If the document does not exist, create it
+        await setDoc(teamDocRef, team);
+      }
     } else {
-      // Add new team
-      const updatedTeams = [...existingTeams, team];
-      localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
+      // Create a new team document if no ID is present
+      const newTeamId = Date.now().toString();
+      const newTeamDocRef = doc(db, 'teams', newTeamId);
+      await setDoc(newTeamDocRef, { ...team, id: newTeamId });
+      setTeam({ ...team, id: newTeamId });
     }
-
+  
     navigate('/profile'); // Navigate to the profile page
   };
+  
   
   const onDragEnd = (result: any) => {
     const { source, destination } = result;
@@ -123,8 +154,8 @@ const TeamPage: React.FC = () => {
   };
 
   // Calculate placeholders needed to reach MAX_MEMBERS in each column
-  const firstColumnPlaceholders = Math.max(0, 8 - team.starters.length);
-  const secondColumnPlaceholders = Math.max(0, 9 - team.bench.length); // Adjusted to 9
+  const firstColumnPlaceholders = Math.max(0, 9 - team.starters.length);
+  const secondColumnPlaceholders = Math.max(0, 8 - team.bench.length); // Adjusted to 9
   const thirdColumnPlaceholders = Math.max(0, 2 - team.irIl.length); // Adjusted to 2
 
   return (

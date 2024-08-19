@@ -4,14 +4,22 @@
   align-items: center;
   background-color: #f4f4f4;
   min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: #333;
 }
 
 .profileContent {
   padding-top: 100px; /* Adjust this value based on your navbar height */
-  width: 100%;
+  width: 80%;
+  max-width: 1200px;
   display: flex;
   align-items: center;
   padding-left: 20px; /* Adjust this value as needed */
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-top: 100px;
 }
 
 .profilePicture {
@@ -19,8 +27,9 @@
   height: 350px; /* Increased size */
   border-radius: 10px; /* Square shape */
   object-fit: cover;
-  margin-right: 100px;
+  margin-right: 50px;
   margin-left: 50px;
+  margin-bottom: 100px;
 }
 
 .profileInfo {
@@ -29,13 +38,15 @@
 }
 
 .profileName {
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 10px;
+  font-weight: bold;
 }
 
 .profileEmail {
   color: #888;
   margin-bottom: 10px;
+  font-size: 18px;
 }
 
 .profileBio {
@@ -72,4 +83,87 @@
 
 .profileButton:hover, .createTeamButton:hover {
   background-color: #45a049;
+}
+
+.teamInfoSection {
+  width: 80%;
+  max-width: 1200px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.teamInfoTitle {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.teamContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.teamDetails {
+  width: 23%; /* 23% width for 4 columns with some spacing */
+  margin: 1%;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.teamName {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.teamPlatform {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+h5 {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  margin-bottom: 5px;
+}
+
+.editTeamButton, .deleteTeamButton {
+  font-size: 14px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+
+.editTeamButton {
+  background-color: #2196F3;
+  color: white;
+}
+
+.editTeamButton:hover {
+  background-color: #1976D2;
+}
+
+.deleteTeamButton {
+  background-color: #f44336;
+  color: white;
+}
+
+.deleteTeamButton:hover {
+  background-color: #d32f2f;
 }

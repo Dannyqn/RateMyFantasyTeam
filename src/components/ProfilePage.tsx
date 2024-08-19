@@ -4,6 +4,8 @@ import styles from './ProfilePage.module.css';
 import profilepic from '../assets/Default_pfp.jpg';
 import { useAuth } from './AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { db } from './firebase'; // Ensure Firebase is correctly configured
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 
 type User = {
   name: string;
@@ -35,15 +37,19 @@ type Team = {
 const ProfilePage: React.FC = () => {
   const [user, setUser] = useState<User>(initialUser);
   const [teams, setTeams] = useState<Team[]>([]);
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
   const { userData } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const savedTeams = localStorage.getItem('teamsData');
-    if (savedTeams) {
-      setTeams(JSON.parse(savedTeams));
-    }
+    const fetchTeams = async () => {
+      const teamsCollection = collection(db, 'teams');
+      const teamDocs = await getDocs(teamsCollection);
+      const teamsData = teamDocs.docs.map(doc => ({ id: doc.id, ...doc.data() } as Team));
+      setTeams(teamsData);
+    };
+
+    fetchTeams();
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -62,9 +68,9 @@ const ProfilePage: React.FC = () => {
     }
   };
 
-  const handleSave = () => {
-    setIsEditing(false);
-    // Here you can add code to save the updated user data to a server or local storage
+  const handleSaveProfile = () => {
+    setIsEditingProfile(false);
+    // Add code to save updated user data to Firestore
   };
 
   const handleCreateTeam = () => {
@@ -73,13 +79,16 @@ const ProfilePage: React.FC = () => {
 
   const handleEditTeam = (teamIndex: number) => {
     const teamToEdit = teams[teamIndex];
-    navigate('/teamcreation', { state: { team: teamToEdit } });
+    navigate('/teamcreation', { state: { team: teamToEdit, isEditing: true } });
   };
 
-  const handleDeleteTeam = (teamIndex: number) => {
-    const updatedTeams = teams.filter((_, index) => index !== teamIndex);
-    setTeams(updatedTeams);
-    localStorage.setItem('teamsData', JSON.stringify(updatedTeams));
+  const handleDeleteTeam = async (teamId: string) => {
+    try {
+      await deleteDoc(doc(db, 'teams', teamId));
+      setTeams(teams.filter(team => team.id !== teamId));
+    } catch (error) {
+      console.error('Error deleting team:', error);
+    }
   };
 
   return (
@@ -92,7 +101,7 @@ const ProfilePage: React.FC = () => {
           className={styles.profilePicture}
         />
         <div className={styles.profileInfo}>
-          {isEditing && userData ? (
+          {isEditingProfile && userData ? (
             <>
               <input
                 type="file"
@@ -106,20 +115,13 @@ const ProfilePage: React.FC = () => {
                 onChange={handleChange}
                 className={styles.profileInput}
               />
-              <input
-                type="email"
-                name="email"
-                value={user.email}
-                onChange={handleChange}
-                className={styles.profileInput}
-              />
-              <button onClick={handleSave} className={styles.profileButton}>Save</button>
+              <button onClick={handleSaveProfile} className={styles.profileButton}>Save</button>
             </>
           ) : (
             <>
-              <h2 className={styles.profileName}>{user.name}</h2>
-              <p className={styles.profileEmail}>{user.email}</p>
-              <button onClick={() => setIsEditing(true)} className={styles.profileButton}>Edit</button>
+              <h2 className={styles.profileName}>{userData && userData.username}</h2>
+              <p className={styles.profileEmail}>{userData && userData.email}</p>
+              <button onClick={() => setIsEditingProfile(true)} className={styles.profileButton}>Edit</button>
             </>
           )}
           <button onClick={handleCreateTeam} className={styles.createTeamButton}>Create a Team</button>
@@ -127,8 +129,8 @@ const ProfilePage: React.FC = () => {
       </div>
       <div className={styles.teamInfoSection}>
         <h2 className={styles.teamInfoTitle}>Your Teams</h2>
-        {teams.length > 0 ? (
-          teams.map((team, index) => (
+        <div className={styles.teamContainer}>
+          {teams.slice(0, 8).map((team, index) => (
             <div key={team.id} className={styles.teamDetails}>
               <h3 className={styles.teamName}>{team.leagueMembers}-Man {team.format}</h3>
               <h4 className={styles.teamPlatform}>Platform: {team.platform}</h4>
@@ -151,12 +153,11 @@ const ProfilePage: React.FC = () => {
                 ))}
               </ul>
               <button onClick={() => handleEditTeam(index)} className={styles.editTeamButton}>Edit</button>
-              <button onClick={() => handleDeleteTeam(index)} className={styles.deleteTeamButton}>Delete</button>
+              <button onClick={() => handleDeleteTeam(team.id)} className={styles.deleteTeamButton}>Delete</button>
             </div>
-          ))
-        ) : (
-          <p>No teams found.</p>
-        )}
+          ))}
+        </div>
+        {teams.length > 8 && <p>You have more teams, but only 8 are displayed.</p>}
       </div>
     </div>
   );
